@@ -347,19 +347,24 @@ class IndexHandler(MixinHandler, tornado.web.RequestHandler):
         return ssh
 
     def get_privatekey(self):
+        # 1. 尝试获取上传的文件
         name = 'privatekey'
         lst = self.request.files.get(name)
         if lst:
-            # multipart form
             filename = lst[0]['filename']
             data = lst[0]['body']
             value = self.decode_argument(data, name=name).strip()
-        else:
-            # urlencoded form
-            value = self.get_argument(name, u'')
-            filename = ''
+            return value, filename
 
-        return value, filename
+        # 2. 如果没有文件，尝试获取粘贴的文本 (privatekey_text)
+        value = self.get_argument('privatekey_text', u'')
+        if value:
+            return value.strip(), ''
+
+        # 3. 最后尝试获取原始参数 (兼容旧逻辑)
+        value = self.get_argument(name, u'')
+        return value, ''
+
 
     def get_hostname(self):
         value = self.get_value('hostname')
