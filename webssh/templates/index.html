@@ -63,8 +63,9 @@
         </div>
         <div class="row">
           <div class="col">
-            <label for="Username">Private Key</label>
-            <input class="form-control" type="file" id="privatekey" name="privatekey" value="">
+            <label for="privatekey">Private Key (File or Paste)</label>
+            <input class="form-control" type="file" id="privatekey" name="privatekey" style="margin-bottom: 8px;">
+            <textarea class="form-control" id="privatekey_text" name="privatekey_text" rows="2" placeholder="-----BEGIN OPENSSH PRIVATE KEY-----" style="font-size: 12px;"></textarea>
           </div>
           <div class="col">
             <label for="Passphrase">Passphrase</label>
